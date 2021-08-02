@@ -1,17 +1,17 @@
 import { useEffect, useState, useMemo } from 'react';
-// import { useFilteredMovies } from './hooks/useFilteredMovies';
-import { fetchMovies } from './api/movies';
-import CheckBoxFilter from './filters/checkbox-filter';
-// import { fetchGenres } from './api/genres';
-
-import MovieList from './movies/movie-list';
+import './styles.css';
+import { useFilteredMovies } from './hooks/useFilteredMovies';
 import SiteHeader from './shared/header';
-import './styles.css'; // check this file out & feel free to use the classes
+import CheckBoxFilter from './filters/checkbox-filter';
+import MovieList from './movies/movie-list';
+
 
 export default function App() {
 
-  const [movies, setMovies] = useState([]);
+  const [allMovies, setAllMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
   const [genres, setGenres] = useState([]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
 
   useEffect(() => {
 
@@ -32,23 +32,23 @@ export default function App() {
       const rsp = await fetch("/movies.json");
       const movies = await rsp.json();
       
-      setMovies(movies
+      setAllMovies(movies);
+      setFilteredMovies(movies
         .sort(function(a,b) {
           return b.popularity - a.popularity;
-        })
-      );
+        }));
     };
 
   }, []);
 
   useMemo(() => {
-    if(movies && genres) {
+    if(allMovies && genres) {
       
       // Store a set of the distinct genre IDs discovered in the movies
       const distinctGenresIds =  new Set();
 
       // Inject the genre names into the movies so we can later pass it to the movie item component
-      movies.forEach(m => {
+      allMovies.forEach(m => {
         let genre_names = [];
         m.genre_ids.forEach(g => {
           genre_names.push(genres.find(f => f.id == g).name);
@@ -63,16 +63,33 @@ export default function App() {
         genres.find(gf => gf.id == gi).hidden = false
       );
     }
-  }, [genres, movies]);
+  }, [genres, allMovies]);
+
+  const onGenreFilterChanged = (e) => {
+    const newSelectedGenres = selectedGenres;
+    const genreId = parseInt(e.target.value);
+
+    // Ensure that the clicked genre id is added/removed accordingly
+    if(selectedGenres.find(sg => sg == genreId)) {
+      newSelectedGenres.splice(selectedGenres.indexOf(genreId), 1);
+    }
+    else {
+      newSelectedGenres.push(genreId);
+    }
+
+    let rating = 0;
+    setSelectedGenres(newSelectedGenres);
+    setFilteredMovies(useFilteredMovies(allMovies, selectedGenres, rating));
+  }
 
   return (
     <div>
       <SiteHeader />
       
       <main>
-        <CheckBoxFilter checkboxItems={genres} />
-        <h2>Showing {movies.length} movies</h2>
-        <MovieList movies={movies} />
+        <CheckBoxFilter checkboxItems={genres} onFilterChanged={onGenreFilterChanged} />
+        <h2>Showing {filteredMovies.length} movies</h2>
+        <MovieList movies={filteredMovies} />
       </main>
 
     </div>

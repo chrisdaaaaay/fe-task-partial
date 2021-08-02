@@ -1,6 +1,8 @@
 import './checkbox-filter.css';
 
-const CheckBoxFilter = ({ checkboxItems }) => {
+const CheckBoxFilter = ({ checkboxItems, onFilterChanged }) => {
+
+  
   return (
     <fieldset className="checkbox-filter">
         {checkboxItems.map(c => (
@@ -9,7 +11,7 @@ const CheckBoxFilter = ({ checkboxItems }) => {
               <span>
                 { c.name }
               </span>
-              <input type="checkbox" value={c.id} />
+              <input onChange={onFilterChanged} type="checkbox" value={c.id} name="checkbox-filter-ids" />
             </label>
           : ""
         ))}
