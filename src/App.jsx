@@ -91,11 +91,10 @@ export default function App() {
   }
 
   const onRatingFilterChanged = (e) => {
-    console.log(e.target.value);
     setFilterRating(parseFloat(e.target.value));
     applyFilters();
   }
-
+  
   return (
     <div>
       <SiteHeader />
