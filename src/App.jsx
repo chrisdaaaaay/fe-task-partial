@@ -32,8 +32,6 @@ export default function App() {
       const rsp = await fetch("/movies.json");
       const movies = await rsp.json();
       
-      
-
       setMovies(movies
         .sort(function(a,b) {
           return b.popularity - a.popularity;
@@ -45,14 +43,25 @@ export default function App() {
 
   useMemo(() => {
     if(movies && genres) {
-      // Inject the genre names into the movies when either has changed
+      
+      // Store a set of the distinct genre IDs discovered in the movies
+      const distinctGenresIds =  new Set();
+
+      // Inject the genre names into the movies so we can later pass it to the movie item component
       movies.forEach(m => {
         let genre_names = [];
         m.genre_ids.forEach(g => {
           genre_names.push(genres.find(f => f.id == g).name);
+          distinctGenresIds.add(g);
         });
         m.genre_names = genre_names;
       });
+
+      // Set the hidden flag on each genre so that we can later hide/show them in the checkbox filter component
+      genres.forEach(g => g.hidden = true );
+      distinctGenresIds.forEach(gi =>
+        genres.find(gf => gf.id == gi).hidden = false
+      );
     }
   }, [genres, movies]);
 
@@ -69,3 +78,4 @@ export default function App() {
     </div>
   );
 }
+ 
