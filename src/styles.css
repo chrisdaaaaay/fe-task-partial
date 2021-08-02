@@ -21,30 +21,19 @@ h1 {
   background-color: #f9f9f9;
   font-size: 2rem;
   padding: 1rem 0;
+  text-align: center;
 }
 
 h2 {
   font-size: 1.2rem;
+  padding:10px;
 }
 
-.container {
-  display: grid;
-  grid-template-columns:
-    [full-start] clamp(1rem, 2vw, 3rem) [main-start] 1fr [main-end] clamp(
-      1rem,
-      2vw,
-      3rem
-    )
-    [full-end];
+main {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.container > * {
-  grid-column: main;
-}
-
-.container > .full {
-  grid-column: full;
-}
 
 .filters {
   border-bottom: 1px solid #eee;
@@ -58,19 +47,32 @@ h2 {
 }
 
 .movies {
-  display: grid;
-  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
   margin: 0 auto;
+  list-style: none;
+  padding:0;
+}
+
+.movies li {
+  width: 50%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 .movie {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(3rem, 1fr) 2fr;
+  width: 100%;
+  padding: 10px 15px;
+  border: solid 1px #CCC;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
-.movie-title {
-  font-size: 1.6rem;
+h3.movie-title {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  margin:0;
+  padding:0;
 }
 
 .movie-image {
@@ -78,19 +80,21 @@ h2 {
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.3);
 }
 
-.movie-content {
-  display: grid;
-  gap: 0.5rem;
-  grid-template-rows: auto 1fr auto;
+.movie-desc {
+  font-size: 1rem;
+  line-height: 150%;
 }
 
 .movie-meta {
-  align-content: start;
-  justify-content: start;
-  display: grid;
-  gap: 0.2rem;
   font-size: 0.8rem;
-  list-style: none;
-  padding: 0;
-  margin: 1rem 0 0 0;
+  display: flex;
+}
+.movie-meta dt,
+.movie-meta dd {
+  padding: 5px 0;
+}
+.movie-meta dd {
+  margin-right:10px;
+  padding-right: 10px;
+  border-right: solid 1px #CCC;
 }
