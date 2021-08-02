@@ -8,7 +8,7 @@ const MovieItem = ({ movie }) => {
 
       <img className="movie-poster" src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} alt={`Poster of: ${movie.title}`} />
 
-      <p class="movie-desc">
+      <p className="movie-desc">
         { movie.overview }
       </p>
 
@@ -17,6 +17,16 @@ const MovieItem = ({ movie }) => {
         <dd>{ movie.vote_average }</dd>
         <dt>Popularity:</dt>
         <dd>{ movie.popularity }</dd>
+        <dt>Genres:</dt>
+        <dd>
+        { movie.genre_names.map((g, i) => (
+          <span key={g}>
+            {g}
+            {i < movie.genre_names.length-2 ? ', ': '' }
+            {i == movie.genre_names.length-2 ? ' and ': '' }
+          </span>
+        ))}
+        </dd>
       </dl>
     </div>
    );

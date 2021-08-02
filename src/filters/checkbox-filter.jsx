@@ -4,11 +4,11 @@ const CheckBoxFilter = ({ checkboxItems }) => {
   return (
     <fieldset className="checkbox-filter">
         {checkboxItems.map(c => (
-          <label>
+          <label key={c.id}>
             <span>
               { c.name }
             </span>
-            <input type="checkbox" key={c.id} value={c.id} />
+            <input type="checkbox" value={c.id} />
           </label>
         ))}
     </fieldset>

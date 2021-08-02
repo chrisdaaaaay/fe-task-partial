@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 // import { useFilteredMovies } from './hooks/useFilteredMovies';
 import { fetchMovies } from './api/movies';
 import CheckBoxFilter from './filters/checkbox-filter';
@@ -31,12 +31,30 @@ export default function App() {
       //const rsp = await fetchMovies;
       const rsp = await fetch("/movies.json");
       const movies = await rsp.json();
-      setMovies(movies.sort(function(a,b) {
-        return b.popularity - a.popularity;
-      }));
+      
+      
+
+      setMovies(movies
+        .sort(function(a,b) {
+          return b.popularity - a.popularity;
+        })
+      );
     };
 
   }, []);
+
+  useMemo(() => {
+    if(movies && genres) {
+      // Inject the genre names into the movies when either has changed
+      movies.forEach(m => {
+        let genre_names = [];
+        m.genre_ids.forEach(g => {
+          genre_names.push(genres.find(f => f.id == g).name);
+        });
+        m.genre_names = genre_names;
+      });
+    }
+  }, [genres, movies]);
 
   return (
     <div>
