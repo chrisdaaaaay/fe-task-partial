@@ -1,0 +1,14 @@
+.number-filter {
+  display: flex;
+  flex-wrap: wrap;
+  border: solid 1px #CCC;
+  border-radius: 5px;
+  width:100%;
+  box-sizing: border-box;
+  margin:10px;
+  padding:10px;
+}
+
+  .number-filter span {
+    margin-right: 10px;
+  }

@@ -2,7 +2,6 @@ import './checkbox-filter.css';
 
 const CheckBoxFilter = ({ checkboxItems, onFilterChanged }) => {
 
-  
   return (
     <fieldset className="checkbox-filter">
         {checkboxItems.map(c => (

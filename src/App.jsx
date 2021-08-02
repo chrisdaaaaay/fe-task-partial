@@ -3,6 +3,7 @@ import './styles.css';
 import { useFilteredMovies } from './hooks/useFilteredMovies';
 import SiteHeader from './shared/header';
 import CheckBoxFilter from './filters/checkbox-filter';
+import NumberFilter  from './filters/number-filter';
 import MovieList from './movies/movie-list';
 
 
@@ -12,9 +13,10 @@ export default function App() {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [selectedGenres, setSelectedGenres] = useState([]);
+  const [filterRating, setFilterRating] = useState([]);
 
   useEffect(() => {
-
+    
     const fetchGenres = async() => {
       //const rsp = await fetchMovies;
       const rsp = await fetch("/genres.json").finally(() =>{
@@ -38,6 +40,9 @@ export default function App() {
           return b.popularity - a.popularity;
         }));
     };
+
+    // initialise the default filter rating
+    setFilterRating(parseFloat(3));
 
   }, []);
 
@@ -65,6 +70,10 @@ export default function App() {
     }
   }, [genres, allMovies]);
 
+  const applyFilters = () => {
+    setFilteredMovies(useFilteredMovies(allMovies, selectedGenres, filterRating));
+  }
+
   const onGenreFilterChanged = (e) => {
     const newSelectedGenres = selectedGenres;
     const genreId = parseInt(e.target.value);
@@ -76,10 +85,15 @@ export default function App() {
     else {
       newSelectedGenres.push(genreId);
     }
-
-    let rating = 0;
+    
     setSelectedGenres(newSelectedGenres);
-    setFilteredMovies(useFilteredMovies(allMovies, selectedGenres, rating));
+    applyFilters();
+  }
+
+  const onRatingFilterChanged = (e) => {
+    console.log(e.target.value);
+    setFilterRating(parseFloat(e.target.value));
+    applyFilters();
   }
 
   return (
@@ -88,6 +102,7 @@ export default function App() {
       
       <main>
         <CheckBoxFilter checkboxItems={genres} onFilterChanged={onGenreFilterChanged} />
+        <NumberFilter labelText="Minimum rating" min={0} max={10} step={0.5} value={filterRating} onFilterChanged={onRatingFilterChanged} />
         <h2>Showing {filteredMovies.length} movies</h2>
         <MovieList movies={filteredMovies} />
       </main>

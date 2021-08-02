@@ -7,12 +7,12 @@
   box-sizing: border-box;
   margin:10px;
 }
-  label {
+  .checkbox-filter label {
     cursor: pointer;
     border: solid 1px #DDD;
     padding:4px;
     margin: 3px 6px 3px 0;
   }
-  label:hover {
+  .checkbox-filter label:hover {
     background: rgba(0,0,0,0.1);
   }

@@ -19,7 +19,8 @@ export const useFilteredMovies = (movies, genres, rating) => {
           return false;
         }
       }
-      return true && m.vote_average > rating;
+      console.log(m.title + " comparing " + parseFloat(m.vote_average) + " to " + parseFloat(rating));
+      return true && parseFloat(m.vote_average) >= parseFloat(rating);
     }
   );
 };
