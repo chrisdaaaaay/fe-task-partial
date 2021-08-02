@@ -30,7 +30,9 @@ export default function App() {
 
       const rsp = await fetch("/genres.json");
       const genres = await rsp.json();
-      setGenres(genres);
+      setGenres(genres.sort(function(a,b) {
+        return a.popularity - b.popularity;
+      }));
     };
 
     fetchGenres();
