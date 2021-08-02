@@ -1,0 +1,38 @@
+.movie {
+  width: 100%;
+  padding: 10px 15px;
+  border: solid 1px #CCC;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+h3.movie-title {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  margin:0;
+  padding:0;
+}
+
+.movie-img {
+  border-radius: 0.2rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.movie-desc {
+  font-size: 1rem;
+  line-height: 150%;
+}
+
+.movie-meta {
+  font-size: 0.8rem;
+  display: flex;
+}
+  .movie-meta dt,
+  .movie-meta dd {
+    padding: 5px 0;
+  }
+  .movie-meta dd {
+    margin-right:10px;
+    padding-right: 10px;
+    border-right: solid 1px #CCC;
+  }

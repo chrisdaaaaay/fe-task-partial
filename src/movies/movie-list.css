@@ -1,0 +1,13 @@
+.movies {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  list-style: none;
+  padding:0;
+}
+
+.movies li {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}

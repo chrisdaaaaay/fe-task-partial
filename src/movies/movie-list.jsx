@@ -1,17 +1,14 @@
+import './movie-list.css';
 import MovieItem from './movie-item';
 
-const MovieList = () => {
+const MovieList = ({ movies }) => {
   return (
     <ul className="movies">
-      <li>
-        <MovieItem />
-      </li>
-      <li>
-        <MovieItem />
-      </li>
-      <li>
-        <MovieItem />
-      </li>
+      {movies.map(m => (
+        <li>
+          <MovieItem movie={m} />
+        </li>
+      ))}
     </ul>
   );
 }
