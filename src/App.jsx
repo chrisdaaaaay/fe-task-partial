@@ -14,29 +14,28 @@ export default function App() {
   const [genres, setGenres] = useState([]);
 
   useEffect(() => {
-    
-    const fetchMovies = async() => {
-      //const rsp = await fetchMovies;
-
-      const rsp = await fetch("/movies.json");
-      const movies = await rsp.json();
-      setMovies(movies);
-    };
-
-    fetchMovies();
 
     const fetchGenres = async() => {
       //const rsp = await fetchMovies;
+      const rsp = await fetch("/genres.json").finally(() =>{
+        fetchMovies();
+      });
 
-      const rsp = await fetch("/genres.json");
       const genres = await rsp.json();
-      setGenres(genres.sort(function(a,b) {
-        return a.popularity - b.popularity;
-      }));
+      setGenres(genres);
     };
 
     fetchGenres();
-    
+
+    const fetchMovies = async() => {
+      //const rsp = await fetchMovies;
+      const rsp = await fetch("/movies.json");
+      const movies = await rsp.json();
+      setMovies(movies.sort(function(a,b) {
+        return b.popularity - a.popularity;
+      }));
+    };
+
   }, []);
 
   return (
